@@ -1,6 +1,10 @@
 var multer  = require('multer');
+const fs = require('fs');
+const { promisify } = require('util');
+const unlinkAsync = promisify(fs.unlink);
 var imageMiddleware= require('../middlewares/image-middleware');
 var imageModel= require('../models/image-model');
+
 
 module.exports = {
   imageList: (req, res) => {
@@ -10,6 +14,16 @@ module.exports = {
   },
   imageUploadForm: (req, res) => {
     res.render('upload-form.ejs');
+  },
+  deleteImage:  (req, res) => {
+    imageModel.deleteImage(req.params.id, (fileName, msg) => {
+      if (fileName) {
+        unlinkAsync(imageMiddleware.image.imagePath + fileName);
+      }
+      imageModel.getImages((data) => {
+        res.render('image-list.ejs', { alertMsg: msg, data: data } )
+      })
+    })
   },
   storeImage: (req, res) => {
     var upload = multer({

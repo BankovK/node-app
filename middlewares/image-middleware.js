@@ -1,10 +1,13 @@
 var multer = require('multer');
 
+var imagePath = 'public/images/';
+
 module.exports.image = {
+  imagePath,
   storage: () => {
     var storage = multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, 'public/images/');
+        cb(null, imagePath);
       },
       filename: (req, file, cb) => {
         cb(null, file.originalname);

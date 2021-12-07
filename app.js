@@ -14,12 +14,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 var imageRouter = require('./routes/image-route');
-
-// imageRouter.post('/login', (req, res) => {
-//   sess = req.session;
-//   sess.username = 'test';
-//   res.end('login successful');
-// });
+var authRouter = require('./routes/auth-route');
 
 imageRouter.get('/time', (req, res) => {
   if(sess) {
@@ -29,17 +24,9 @@ imageRouter.get('/time', (req, res) => {
   }
 });
 
-// imageRouter.get('/logout', (req, res) => {
-//   req.session.destroy((err) => {
-//     if(err) {
-//         return console.log(err);
-//     }
-//     res.end('You have logged out.');
-//   });
-// });
-
 
 app.use('/', imageRouter);
+app.use('/', authRouter);
 
 var server = app.listen(process.env.PORT || 3000,() => {
   console.log(`App Started on PORT ${process.env.PORT || 3000}`);
