@@ -15,6 +15,7 @@ app.set('view engine', 'html');
 
 var imageRouter = require('./routes/image-route');
 var authRouter = require('./routes/auth-route');
+var userRouter = require('./routes/user-route');
 
 imageRouter.get('/time', (req, res) => {
   if(sess) {
@@ -27,6 +28,7 @@ imageRouter.get('/time', (req, res) => {
 
 app.use('/', imageRouter);
 app.use('/', authRouter);
+app.use('/', userRouter);
 
 var server = app.listen(process.env.PORT || 3000,() => {
   console.log(`App Started on PORT ${process.env.PORT || 3000}`);

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <%- include('./header.ejs') %>
+  <h1>Users</h1>
+  <%- include('./register-form-content.ejs') %>
+  <% for(var i=0; i < data.length; i++) { %>
+    <div>
+      <div><%= data[i].username %></div>
+      <form action="/delete-user/<%= data[i].id %>" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+    <hr>
+  <% } %>
+</body>
+</html>

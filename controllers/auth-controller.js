@@ -5,16 +5,17 @@ module.exports = {
     res.render('login-form.ejs');
   },
   login: (req, res) => {
+    req.session.isAdmin = false;
     const username = req.body.username;
     const password = req.body.password;
     if (!username || !password) {
       res.send('login failed');    
     } else {
-      userModel.getUser({username, password}, (data) => {
-        res.render('upload-form.ejs', { alertMsg: data } )
+      userModel.getUser({username, password}, (data, msg) => {
+        req.session.user = username;
+        req.session.isAdmin = data.is_admin;
+        res.redirect('/stored-images');
       })
-      req.session.user = username;
-      res.redirect('/stored-images');
     }
   },
   logout: (req, res) => {

@@ -6,7 +6,7 @@ const conn = mysql.createConnection({
   port: "3306",
   user: "root",
   password: "greattest",
-  database: "kfc-db",
+  database: "node_t",
   // debug: true,
 });
 conn.connect(function(err) {
