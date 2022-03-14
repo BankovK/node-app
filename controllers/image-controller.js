@@ -27,7 +27,7 @@ module.exports = {
   },
   storeImage: (req, res) => {
     var upload = multer({
-                storage: imageMiddleware.image.storage(), 
+                // storage: imageMiddleware.image.storage(), 
                 allowedImage:imageMiddleware.image.allowedImage 
                 }).single('image');
     upload(
@@ -39,13 +39,13 @@ module.exports = {
         } else if (err) {
           res.send(err);
         } else {
-          var imageName = req.file.originalname;
           var inputValues = {
-            image_name: imageName
+            image_name: req.file.originalname,
+            image: req.file.buffer.toString('base64'),
           }
           imageModel.storeImage(inputValues, (data) => {
             res.render('upload-form.ejs', { alertMsg: data } )
-          })   
+          })
         }   
       }
     )

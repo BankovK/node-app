@@ -9,7 +9,8 @@
   <p><%=(typeof alertMsg!='undefined')? alertMsg:''%></p>
   <% for(var i=0; i < data.length; i++) { %>
     <div>
-      <img src="/images/<%= data[i].image_name %>" height="300" alt=<%= data[i].image_name %>>
+      <!-- <img src="/images/<%= data[i].image_name %>" height="300" alt=<%= data[i].image_name %>> -->
+      <img src="data:img/png;base64,<%= data[i].image %>" height="300" alt=<%= data[i].image_name %>>
       <div><%= data[i].image_name %></div>
       <form action="/delete-image/<%= data[i].id %>" method="POST">
         <button type="submit">Delete</button>
