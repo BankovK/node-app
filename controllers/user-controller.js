@@ -11,8 +11,8 @@ module.exports = {
     const alertMsg = req.query.alert;
     res.render('register-form.ejs', { alertMsg } );
   },
-  deleteUser:  (req, res) => {
-    userModel.deleteUser(req.params.id, (fileName, msg) => {
+  deleteUser: (req, res) => {
+    userModel.deleteUser(req.params.id, (username, msg) => {
       userModel.getUsers((data) => {
         res.render('user-list.ejs', { alertMsg: msg, data: data } )
       })

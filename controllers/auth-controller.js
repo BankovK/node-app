@@ -9,7 +9,7 @@ module.exports = {
     const username = req.body.username;
     const password = req.body.password;
     if (!username || !password) {
-      res.send('login failed');    
+      res.status(400).send('login failed');    
     } else {
       userModel.getUser({username, password}, (data, msg) => {
         req.session.user = username;
