@@ -3,6 +3,11 @@ var session = require('express-session')({secret: 'test1', saveUninitialized: tr
 const bodyParser = require('body-parser');
 var moment = require('moment');
 var app = express();
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+const readline = require('readline')
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout  });
 
 var sess;
 
@@ -65,6 +70,18 @@ io.on('connection', socket => {
   })
 })
 
-server.listen(process.env.PORT || 3000,() => {
-  console.log(`App Started on PORT ${process.env.PORT || 3000}`);
-});
+const argv = yargs(hideBin(process.argv)).argv;
+
+const deploy = (port) => {
+  server.listen(port, () => {
+    console.log(`App Started on PORT ${port}`);
+  });
+}
+
+if (!!argv.port) {
+    deploy(argv.port);
+} else {
+    rl.question('What port do you want to run on? ', (answer) => {
+        deploy(answer || process.env.PORT || 3000);
+    });
+}
